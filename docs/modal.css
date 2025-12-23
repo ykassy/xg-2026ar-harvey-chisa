@@ -52,7 +52,7 @@
 
 /* モーダルGIF */
 .modal-gif {
-  width: 500px; /* 400px → 500pxに拡大 */
+  width: 600px; /* 600pxに拡大 */
   height: auto;
   max-width: 90%;
   margin: 0 0 30px 0;
@@ -80,8 +80,8 @@
   background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
   color: #000000;
   border: none;
-  padding: 30px 80px;
-  font-size: 36px;
+  padding: 35px 95px;
+  font-size: 42px;
   font-weight: 700;
   letter-spacing: 2px;
   border-radius: 100px;

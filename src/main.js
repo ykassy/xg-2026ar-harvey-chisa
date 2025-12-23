@@ -312,15 +312,23 @@ function setupModalHandler() {
 }
 
 // ===== ページ読み込み時の処理 =====
+// パスワード認証後にCamera Kitを初期化するため、グローバルに公開
+window.startCameraKitAfterAuth = async function() {
+  await initCameraKit();
+  setupModalHandler();
+};
+
+// 認証済みの場合のみ自動で初期化
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', async () => {
-    await initCameraKit(); // Camera Kit初期化
-    setupModalHandler(); // モーダルボタン設定
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('xg_auth') === 'true') {
+      window.startCameraKitAfterAuth();
+    }
   });
 } else {
-  initCameraKit().then(() => {
-    setupModalHandler();
-  });
+  if (sessionStorage.getItem('xg_auth') === 'true') {
+    window.startCameraKitAfterAuth();
+  }
 }
 
 // ===== カメラ更新 =====
@@ -377,10 +385,13 @@ async function updateCamera(switchCamera = false) {
 }
 
 // ===== カメラ切り替えボタン =====
+let cameraSwitcherInitialized = false;
 function setupCameraSwitcher() {
+  if (cameraSwitcherInitialized) return; // 重複登録を防止
   const cameraSwitchBtn = document.getElementById("camera-switcher");
   if (cameraSwitchBtn) {
     cameraSwitchBtn.addEventListener("click", () => updateCamera(true)); // カメラ切り替え
+    cameraSwitcherInitialized = true;
   }
 }
 

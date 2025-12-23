@@ -1,98 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <title> AR Experience!! </title>
-  <meta name="description" content="AR Experience!!">
-  <meta name="robots" content="noindex">
-  <link rel="icon" href="./assets/favicon.png" type="image/png">
-  <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="./assets/favicon.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <link href="index.css" rel="stylesheet">
-  <link href="loading.css" rel="stylesheet">
-  <link href="capture.css" rel="stylesheet">
-  <link href="btn.css" rel="stylesheet">
-  <link href="count.css" rel="stylesheet">
-  <link href="modal.css" rel="stylesheet">
-
-  <script>
-    // グローバル変数は window オブジェクトに統一
-    window.session = null;
-    window.mediaStream = null;
-    window.liveRenderTarget = null;
-    window.movieBlob = null;
-  </script>
-  <script type="module" src="./packed.js"></script>
+<meta charset="utf-8">
+<title>AR Experience!!</title>
+<meta name="description" content="AR Experience!!">
+<meta name="viewport" content="width=1080">
+<meta name="robots" content="noindex">
+<link rel="icon" href="./assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="./assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="styles.min.css" rel="stylesheet">
+<script>window.session=null;window.mediaStream=null;window.liveRenderTarget=null;window.movieBlob=null;</script>
+<script type="module" src="./packed.js"></script>
 </head>
-
 <body>
-  <!-- ローディング画面 -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-content">
-      <img src="./assets/loading.gif" alt="Loading..." class="loading-gif">
-    </div>
-  </div>
-
-  <!-- モーダル：音声許可（Camera Kit初期化後に表示） -->
-  <div id="audio-modal" class="audio-modal hidden">
-    <div class="audio-modal-content">
-      <div style="margin-bottom: 30px;">
-        <img src="./assets/modal.gif" alt="Modal" class="modal-gif">
-      </div>
-      <div>
-        <button id="start-experience-btn" class="start-btn">AR START !!</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- キャプチャー -->
-  <div class="capture-btn-wrapper">
-    <button id="capture-btn">
-      <div class="capture-btn-inner-wrapper">
-        <span class="capture-btn-inner"></span>
-      </div>
-    </button>
-    <button id="stop-btn"></button>
-  </div>
-
-  <!-- カメラ切り替え -->
-  <div class="camera-switcher-btn-wrapper">
-    <button id="camera-switcher"><span class="camera-switcher-inner"></span></button>
-  </div>
-
-  <canvas id="canvas"></canvas>
-  <video id="video" style="display:none;" autoplay playsinline></video>
-
-  <!-- 静止画 -->
-  <div id="camera-container"><div id="camera-output"></div></div>
-  <img id="captured-image" alt="Captured Image">
-
-  <!-- プレビュー系 -->
-  <div class="pic-preview-btn-wrapper">
-    <button id="pic-preview-back-btn"></button>
-    <button id="pic-preview-share-btn">SHARE PHOTO</button>
-    <button style="visibility:hidden;"></button>
-  </div>
-
-  <div class="movie-preview-btn-wrapper">
-    <button id="movie-preview-back-btn"></button>
-    <button id="movie-preview-share-btn">SHARE MOVIE</button>
-    <button style="visibility:hidden;"></button>
-  </div>
-
-  <!-- カウント -->
-  <div class="movie-record-cnt-wrapper">
-    <span class="movie-record-cnt">00:00</span>
-  </div>
-
-  <script src="./share.js"></script>
-  <script src="./btn.js"></script>
-  <script src="./count.js"></script>
-  <script src="./view.js"></script>
+<div id="password-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;z-index:10000"><div style="text-align:center;color:#fff;padding:20px"><p style="margin-bottom:40px;font-size:48px;font-weight:600">Password Required</p><input type="password" id="password-input" style="padding:30px 40px;font-size:48px;border:none;border-radius:20px;width:500px;text-align:center;box-sizing:border-box" placeholder="Enter password"><br><button id="password-submit" style="margin-top:40px;padding:30px 80px;font-size:48px;font-weight:600;background:#fff;border:none;border-radius:20px;cursor:pointer">Enter</button><p id="password-error" style="color:#ff6b6b;margin-top:30px;font-size:36px;display:none">Incorrect password</p></div></div>
+<script>!function(){const e="xg2026",t="xg_auth";function n(){document.getElementById("loading-screen").style.display="flex";const e=setInterval(function(){window.startCameraKitAfterAuth&&(clearInterval(e),window.startCameraKitAfterAuth())},100)}if("true"===sessionStorage.getItem(t))return document.getElementById("password-screen").style.display="none",void n();function s(){document.getElementById("password-input").value===e?(sessionStorage.setItem(t,"true"),document.getElementById("password-screen").style.display="none",n()):(document.getElementById("password-error").style.display="block",document.getElementById("password-input").value="")}document.getElementById("password-submit").addEventListener("click",s),document.getElementById("password-input").addEventListener("keypress",function(e){"Enter"===e.key&&s()})}();</script>
+<div id="loading-screen" class="loading-screen" style="display:none"><div class="loading-content"><img src="./assets/loading.gif" alt="Loading..." class="loading-gif"></div></div>
+<div id="audio-modal" class="audio-modal hidden"><div class="audio-modal-content"><div style="margin-bottom:30px"><img src="./assets/modal.gif" alt="Modal" class="modal-gif"></div><div><button id="start-experience-btn" class="start-btn">AR START !!</button></div></div></div>
+<div class="capture-btn-wrapper"><button id="capture-btn"><div class="capture-btn-inner-wrapper"><span class="capture-btn-inner"></span></div></button><button id="stop-btn"></button></div>
+<div class="camera-switcher-btn-wrapper"><button id="camera-switcher"><span class="camera-switcher-inner"></span></button></div>
+<canvas id="canvas"></canvas>
+<video id="video" style="display:none" autoplay playsinline></video>
+<div id="camera-container"><div id="camera-output"></div></div>
+<img id="captured-image" alt="Captured Image">
+<button id="pic-preview-back-btn"></button>
+<div class="pic-preview-btn-wrapper"><button id="pic-preview-share-btn">SHARE PHOTO</button></div>
+<button id="movie-preview-back-btn"></button>
+<div class="movie-preview-btn-wrapper"><button id="movie-preview-share-btn">SHARE MOVIE</button></div>
+<div class="movie-record-cnt-wrapper"><span class="movie-record-cnt">00:00</span></div>
+<script src="./scripts.min.js"></script>
 </body>
 </html>

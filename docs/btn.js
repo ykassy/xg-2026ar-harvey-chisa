@@ -72,27 +72,37 @@ function cameraSwitchBtnWrapperEvent(isPreview) {
 
 /**
  * 静止画プレビューボタンの表示非表示
- * @param {*} isPreview 
+ * @param {*} isPreview
  */
 function previewBtnWrapperEvent(isPreview) {
     const previewBtnWrapper = document.querySelector(".pic-preview-btn-wrapper");
+    const picPreviewBackBtn = document.getElementById("pic-preview-back-btn");
     if (isPreview) {
         previewBtnWrapper.classList.add("preview");
+        picPreviewBackBtn.classList.add("preview");
+        // 画面向きに応じたスタイルを適用
+        if (typeof adjustCanvasSize === 'function') adjustCanvasSize();
     } else {
         previewBtnWrapper.classList.remove("preview");
+        picPreviewBackBtn.classList.remove("preview");
     }
 }
 
 /**
  * 動画プレビューボタンの表示非表示
- * @param {*} isPreview 
+ * @param {*} isPreview
  */
 function moviePreviewBtnWrapperEvent(isPreview) {
     const moviePreviewBtnWrapper = document.querySelector(".movie-preview-btn-wrapper");
+    const moviePreviewBackBtn = document.getElementById("movie-preview-back-btn");
     if (isPreview) {
         moviePreviewBtnWrapper.classList.add("preview");
+        moviePreviewBackBtn.classList.add("preview");
+        // 画面向きに応じたスタイルを適用
+        if (typeof adjustCanvasSize === 'function') adjustCanvasSize();
     } else {
         moviePreviewBtnWrapper.classList.remove("preview");
+        moviePreviewBackBtn.classList.remove("preview");
     }
 }
 
